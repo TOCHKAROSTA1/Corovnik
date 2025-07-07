@@ -1,0 +1,7 @@
+23:16:45 - root - INFO - Загружен gui
+23:16:45 - root - INFO - Подключена база данных
+23:16:46 - root - DEBUG - {'2881654597': [[False, False], [0.033, None, None], [None, None, None, None]]}
+23:16:49 - root - INFO - Подключен порт COM7
+23:16:58 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.telegram.org:443
+23:16:59 - urllib3.connectionpool - DEBUG - https://api.telegram.org:443 "POST /bot8108770659:AAEQCas0rafWJrMxjpvMq7w1SZc82Mqkkec/sendMessage?chat_id=5318464880&text=%D0%9A%D0%BE%D1%80%D0%BE%D0%B2%D0%B0+%D0%BF%D0%BE%D1%85%D1%83%D0%B4%D0%B5%D0%BB%D0%B0+%D0%BE%D1%82%D0%BD%D0%BE%D1%81%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE+%D1%81%D1%82%D0%B0%D1%80%D1%8B%D1%85+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85 HTTP/1.1" 200 630
+23:18:16 - urllib3.connectionpool - DEBUG - https://api.telegram.org:443 "POST /bot8108770659:AAEQCas0rafWJrMxjpvMq7w1SZc82Mqkkec/sendMessage?chat_id=5318464880&text=%D0%9A%D0%BE%D1%80%D0%BE%D0%B2%D0%B0+%D0%BF%D0%BE%D1%85%D1%83%D0%B4%D0%B5%D0%BB%D0%B0+%D0%BE%D1%82%D0%BD%D0%BE%D1%81%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE+%D1%81%D1%82%D0%B0%D1%80%D1%8B%D1%85+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85 HTTP/1.1" 200 630
