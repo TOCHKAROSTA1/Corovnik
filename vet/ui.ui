@@ -116,25 +116,6 @@
      <string>Введите вопрос</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="answer">
-    <property name="geometry">
-     <rect>
-      <x>1020</x>
-      <y>90</y>
-      <width>251</width>
-      <height>641</height>
-     </rect>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-    <property name="dragEnabled">
-     <bool>true</bool>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QPushButton" name="send">
     <property name="geometry">
      <rect>
@@ -146,6 +127,16 @@
     </property>
     <property name="text">
      <string>Отправить</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="answer">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>90</y>
+      <width>251</width>
+      <height>641</height>
+     </rect>
     </property>
    </widget>
   </widget>

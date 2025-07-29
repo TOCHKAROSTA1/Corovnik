@@ -2,10 +2,11 @@
 #include <MFRC522.h>
 #include <GyverHX711.h>
 //#include <GyverBME280.h>                      // Подключение библиотеки
-//#include <Servo.h>
+#include <Servo.h>
 #include "OneButton.h"
 OneButton button;
-//Servo myservo;
+Servo servo1;
+Servo servo2;
 //GyverBME280 bme;
 #include <Adafruit_MLX90614.h>
 
@@ -38,16 +39,19 @@ void setup() {
   pinMode(RE_DE_PIN, OUTPUT);
   Serial1.begin(9600);
   digitalWrite(RE_DE_PIN, 1);  // Режим приёма
-  //bme.begin();
-  //  myservo.attach(9);
+  servo1.attach(9);
+  servo2.attach(8);
   SPI.begin();
   button.setup(6, INPUT_PULLUP, true);
+  delay(500);
   sensor.tare();
   //  pinMode(7, INPUT_PULLUP);
   mfrc522.PCD_Init();
   mlx.begin();
   button.attachClick(clickb);
   button.attachDoubleClick(doubleclick);
+  servo1.write(90);
+  servo2.write(90);
 
   // link the doubleclick function to be called on a doubleclick event.
 }
@@ -69,14 +73,13 @@ void loop() {
   if (sensor.available() && (currentTime - lastMeasureTime >= measureInterval)) {
     lastMeasureTime = currentTime;
 
-    float weight = sensor.read() / 191.000;  // приведение к float для точности
+    float weight = sensor.read() / 190.000;  // приведение к float для точности
     sum += weight;
     count++;
 
     if (count >= measureCount) {
       average = sum / measureCount;
-
-      // сброс накопителей
+            // сброс накопителей
       count = 0;
       sum = 0;
     }
@@ -90,13 +93,14 @@ void loop() {
 
     if (count1 >= MEASURE_COUNT1) {
       average1 = sum1 / MEASURE_COUNT1;
+      
 
       // Сброс накопителей
       count1 = 0;
       sum1 = 0;
     }
   }
-  if (Serial1.available()){
+  if (Serial1.available()) {
     String data = Serial1.readString();
     Serial.print("2," + data);
   }
@@ -104,7 +108,7 @@ void loop() {
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
     return;
   }
-
+  servo1.write(180);
   if (!up) {
 
     // Конвертация 4 байт UID в unsigned long (32 бита)
@@ -112,7 +116,7 @@ void loop() {
     for (byte i = 0; i < 4; i++) {  // Берём первые 4 байта (для 7-байтных UID нужно изменить логику)
       uid_hex = (uid_hex << 8) | mfrc522.uid.uidByte[i];
     }
-    digitalWrite(8, 1);
+   // digitalWrite(8, 1);
     /*while (!flag) {
       myservo.write(map(analogRead(A0), 0, 1023, 0, 180));
       button.tick();
@@ -126,7 +130,7 @@ void loop() {
     Serial.print(average);
     Serial.print(",");
     Serial.println(average1);
-
+    servo2.write(0);
 
   } else {
     // Конвертация 4 байт UID в unsigned long (32 бита)
@@ -134,7 +138,7 @@ void loop() {
     for (byte i = 0; i < 4; i++) {  // Берём первые 4 байта (для 7-байтных UID нужно изменить логику)
       uid_hex = (uid_hex << 8) | mfrc522.uid.uidByte[i];
     }
-    digitalWrite(8, 1);
+ //   digitalWrite(8, 1);
     /* while (!flag) {
       myservo.write(map(analogRead(A0), 0, 1023, 0, 180));
       button.tick();
@@ -149,6 +153,10 @@ void loop() {
     Serial.print(",");
     Serial.println(average1);
     up = false;
+    servo2.write(0);
   }
+  delay(2000);
+  servo1.write(90);
+  servo2.write(90);
   mfrc522.PICC_HaltA();
 }

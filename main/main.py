@@ -232,7 +232,9 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     old = database.record("cows", int(uid[1]), "rfid")[5]
                     c = (int(uid[2]) / 1000) - old
                     if c < 0:
-                        self.bot.send("Корова похудела относительно старых данных")
+                        self.bot.send(f"Корова {uid[1]} похудела относительно старых данных на {abs(c)}")
+                    if float(uid[3]) >= 38.0:
+                        self.bot.send(f"У корова {uid[1]} высокая темпиратура {uid[3]}")
                     database.update("cows", uid[1], {
                         "weight": int(uid[2]) / 1000,
                         "weight_change": c,

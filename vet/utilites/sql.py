@@ -1,11 +1,11 @@
 import psycopg2
 class sql:
-    def __init__(self, ):
+    def __init__(self, host = "192.168.0.15"):
         self.database = psycopg2.connect(
             dbname="Cows",
             user="postgres",
             password="123",
-            host="localhost",
+            host=host,
             port="5432"
             )
         self.cursor = self.database.cursor()

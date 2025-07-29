@@ -6,15 +6,19 @@ from functools import partial
 from ui import Ui_MainWindow  # Импортируем сгенерированный класс
 from utilites.utilites import *
 from utilites.gpt import *
+import queue
 
 class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     update_table_signal = pyqtSignal()  # Сигнал с данными
+    update_data = pyqtSignal(str)  # Сигнал с данными
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()  # Создаем экземпляр интерфейса
         self.ui.setupUi(self)  # Настраиваем интерфейс
         self.database = sql.sql()
-        self.ai = "ai: "
+        self.result_queue = queue.Queue()
+        self.ai = ""
+        self.update_data.connect(self.data)
         self.ui.ok.clicked.connect(self.ok)
         self.ui.send.clicked.connect(self.send)
         self.update_table_signal.connect(self.update_table)
@@ -53,11 +57,20 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 for day_idx in range(7):
                     self.ui.tableWidget.setItem(row_idx, 10 + day_idx, QtWidgets.QTableWidgetItem("-"))
+    
+    def data(self, daata):
+        self.ui.answer.setText(daata)
+    def thread(self):
+        que = self.ui.question.text()
+        self.ui.question.setText("")
+        self.ai += f"ВетАссистент: {gpt(que)}"
+        self.ai += "\n\n"
+        self.update_data.emit(self.ai)
+
 
     def send(self):
-        self.ai += gpt(self.ui.question.text())
-        self.ai += "\n"
-        self.ui.answer.setText(self.ai)
+        g = th.Thread(target=self.thread)
+        g.start()
 
     def updated(self):
         while True:
